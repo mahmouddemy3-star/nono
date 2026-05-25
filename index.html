@@ -2,9 +2,10 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مفاجأة العيد لنونو ❤️</title>
     <style>
+        /* إعدادات الخلفية لتناسب الموبايل */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 100%);
@@ -15,16 +16,18 @@
             margin: 0;
             overflow: hidden;
             position: relative;
+            touch-action: manipulation; /* تحسين اللمس للموبايل */
         }
 
+        /* كرت متجاوب مع شاشات الموبايل */
         .card {
             background: white;
-            padding: 30px;
+            padding: 25px 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 500px;
-            width: 90%;
+            max-width: 400px;
+            width: 85%;
             border: 3px solid #ff6b81;
             position: relative;
             z-index: 10;
@@ -33,13 +36,14 @@
 
         h1 {
             color: #ff4757;
-            font-size: 2rem;
+            font-size: 1.6rem;
             margin-bottom: 10px;
+            line-height: 1.4;
         }
 
         .question {
             color: #2ed573;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             font-weight: bold;
             margin-bottom: 25px;
         }
@@ -55,30 +59,31 @@
             background-color: #ffffff;
             border: 2px solid #ffa502;
             color: #333;
-            padding: 15px 20px;
-            font-size: 1.1rem;
+            padding: 14px 15px;
+            font-size: 1.05rem;
             font-weight: bold;
             border-radius: 12px;
             cursor: pointer;
-            transition: background-color 0.3s, color 0.3s, transform 0.1s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            -webkit-tap-highlight-color: transparent; /* إزالة الوميض الأزرق في الموبايل */
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        .btn:hover {
+        .btn:active {
             background-color: #ffa502;
             color: white;
         }
 
-        /* تنسيق خاص بالزر الهارب */
+        /* تعديل حركة الزر الهارب ليعمل بسلاسة على الموبايل */
         #safariBtn {
             position: relative;
             z-index: 20;
-            transition: all 0.2s ease;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .result {
             display: none;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: #ff4757;
             font-weight: bold;
             margin-top: 20px;
@@ -86,10 +91,10 @@
             line-height: 1.6;
         }
 
-        /* أنميشن الخرفان المتطايرة */
+        /* أنميشن الخرفان المتطايرة حجم مناسب للموبايل */
         .sheep {
             position: absolute;
-            width: 60px;
+            width: 45px;
             height: auto;
             pointer-events: none;
             z-index: 1;
@@ -102,14 +107,10 @@
                 transform: translateY(0) rotate(0deg);
                 opacity: 0;
             }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 1;
-            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
             100% {
-                transform: translateY(-110vh) rotate(360deg);
+                transform: translateY(-115vh) rotate(360deg);
                 opacity: 0;
             }
         }
@@ -128,13 +129,13 @@
 <body>
 
     <div class="card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">🎈❤️✨</div>
+        <div style="font-size: 2.5rem; margin-bottom: 15px;">🎈❤️✨</div>
         <h1>كل سنة وأنتِ طيبة يا نونو بمناسبة عيد الأضحى! 🎉</h1>
         <p class="question">تحبي نعمل ايه في العيد ده يا نونو؟</p>
         
         <div class="options-container" id="options">
             <button class="btn" onclick="showResult(1)">1- نخرج خروجة 🚗✨</button>
-            <button class="btn" id="safariBtn" onmouseover="fleeButton()" onclick="handleSafariClick(event)">2- نسافر سفرية جامدة ✈️🌊</button>
+            <button class="btn" id="safariBtn" onmouseover="fleeButton()" ontouchstart="fleeButton(); event.preventDefault();" onclick="handleSafariClick(event)">2- نسافر سفرية جامدة ✈️🌊</button>
             <button class="btn" onclick="showResult(3)">3- نقعد في البيت ونتفرج علي افلام ونانتخ 🍿🎬</button>
         </div>
 
@@ -142,53 +143,51 @@
     </div>
 
     <script>
-        // مصفوفة روابط لصور خرفان لطيفة ومبهجة
         const sheepImage = "https://img.icons8.com/color/96/cartoon-sheep.png";
 
-        // توليد الخرفان الطائرة تلقائياً
         function createSheep() {
             const sheep = document.createElement('img');
             sheep.src = sheepImage;
             sheep.classList.add('sheep');
+            sheep.style.left = Math.random() * 90 + "vw"; // تحديد العرض ليناسب الموبايل ولا يخرج عن الشاشة
             
-            // توزيع عشوائي للخرفان على الشاشة
-            sheep.style.left = Math.random() * 100 + "vw";
-            
-            // أحجام وسرعات عشوائية لتأثير أجمل
-            const size = Math.random() * 30 + 40; // بين 40px و 70px
+            const size = Math.random() * 20 + 35; // حجم أصغر قليلاً ومناسب لشاشة الهاتف
             sheep.style.width = size + "px";
             
-            const duration = Math.random() * 4 + 4; // بين 4 و 8 ثواني
+            const duration = Math.random() * 3 + 4; 
             sheep.style.animationDuration = duration + "s";
             
             document.body.appendChild(sheep);
             
-            // حذف الخروف بعد انتهاء حركته لتوفير الأداء
             setTimeout(() => {
                 sheep.remove();
             }, duration * 1000);
         }
 
-        // إطلاق خروف جديد كل نصف ثانية
-        setInterval(createSheep, 500);
+        // إطلاق الخرفان
+        setInterval(createSheep, 600);
 
         let clickCount = 0;
         const safariBtn = document.getElementById('safariBtn');
 
-        // وظيفة تجعل الزر يهرب عند اقتراب الماوس أو اللمس
         function fleeButton() {
-            // الزر سيهرب فقط أول 3 مرات، في الرابعة سيثبت ليتم الضغط عليه وإظهار الصدمة
             if (clickCount < 3) {
-                const x = Math.random() * (window.innerWidth - safariBtn.offsetWidth - 40) - (window.innerWidth / 2 - safariBtn.offsetWidth);
-                const y = Math.random() * (window.innerHeight - safariBtn.offsetHeight - 40) - (window.innerHeight / 2 - safariBtn.offsetHeight);
+                // حسابات دقيقة لأبعاد شاشة الموبايل والكمبيوتر حتى لا يختفي الزر خارج الشاشة
+                const padding = 40;
+                const minX = padding;
+                const maxX = window.innerWidth - safariBtn.offsetWidth - padding;
+                const minY = padding;
+                const maxY = window.innerHeight - safariBtn.offsetHeight - padding;
+
+                const randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+                const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
                 
                 safariBtn.style.position = 'fixed';
-                safariBtn.style.left = Math.min(Math.max(20, Math.random() * (window.innerWidth - 150)), window.innerWidth - 150) + 'px';
-                safariBtn.style.top = Math.min(Math.max(20, Math.random() * (window.innerHeight - 80)), window.innerHeight - 80) + 'px';
+                safariBtn.style.left = randomX + 'px';
+                safariBtn.style.top = randomY + 'px';
             }
         }
 
-        // معالجة الضغطات على زر السفرية
         function handleSafariClick(event) {
             event.preventDefault();
             clickCount++;
@@ -201,7 +200,7 @@
                 fleeButton();
             } else if (clickCount === 3) {
                 safariBtn.innerText = "متأكدة آخر قرار؟ 🧐";
-                // نلغي الهروب الآن لكي تستطيع ضغطه للمرة الرابعة والأخيرة
+                // يثبت الزر تماماً لتتمكن من ضغطه في المرة الرابعة
                 safariBtn.style.position = 'relative';
                 safariBtn.style.left = '0';
                 safariBtn.style.top = '0';
@@ -210,7 +209,6 @@
             }
         }
 
-        // إظهار النتائج النهائية حسب الأرقام المطلوبة
         function showResult(choice) {
             const options = document.getElementById('options');
             const resultBox = document.getElementById('resultBox');
