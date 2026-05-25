@@ -3,228 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>مفاجأة العيد لنونو ❤️</title>
+    <title>عيد أضحى مبارك لنونو ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #a31d1d; /* اللون الأحمر العيد */
+            --glass-bg: rgba(255, 255, 255, 0.88);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 100%);
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            /* تم وضع رابط صورتك هنا مباشرة */
+            background: url('https://i.ibb.co/4nw53S85/image.jpg') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
             overflow: hidden;
-            position: relative;
-            touch-action: manipulation;
         }
 
-        .card {
-            background: white;
-            padding: 25px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 400px;
-            width: 85%;
-            border: 3px solid #ff6b81;
+        /* طبقة حماية خفيفة لراحة العين وضمان وضوح النصوص */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(24df, 240, 225, 0.15); /* تلميحة بيج خفيفة تناسب التصميم */
+            z-index: 1;
+        }
+
+        /* زر الهوم الدائري العصري لإعادة التجربة */
+        .home-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 45px;
+            height: 45px;
+            background: var(--glass-bg);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-size: 20px;
+            border: 2px solid var(--primary-color);
+            transition: transform 0.2s;
+        }
+        .home-btn:active { transform: scale(0.9); }
+
+        /* الكارت الشفاف العصري المتموضع بدقة فوق التصميم */
+        .container {
             position: relative;
             z-index: 10;
-            animation: popIn 0.8s ease-out;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 25px 20px;
+            border-radius: 25px;
+            width: 85%;
+            max-width: 360px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.4);
+            box-shadow: 0 15px 35px rgba(163, 29, 29, 0.15);
+            animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            margin-bottom: 80px; /* ترحيل الكارت للأعلى قليلاً ليتناسق مع الخروف في الخلفية */
         }
 
         h1 {
-            color: #ff4757;
-            font-size: 1.6rem;
-            margin-bottom: 10px;
-            line-height: 1.4;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin: 0 0 8px;
+            font-weight: 800;
         }
 
         .question {
-            color: #2ed573;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 25px;
+            color: #444;
+            font-size: 1.05rem;
+            margin-bottom: 20px;
+            font-weight: 600;
         }
 
-        .options-container {
+        .btn-group {
             display: flex;
             flex-direction: column;
-            gap: 15px;
-            position: relative;
+            gap: 12px;
         }
 
         .btn {
-            background-color: #ffffff;
-            border: 2px solid #ffa502;
+            background: white;
+            border: 1.5px solid #e2d2be; /* لون بيج هادئ مريح للعين مستوحى من الخلفية */
+            padding: 14px;
+            border-radius: 15px;
+            font-size: 0.98rem;
+            font-weight: 600;
             color: #333;
-            padding: 14px 15px;
-            font-size: 1.05rem;
-            font-weight: bold;
-            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s, color 0.3s;
+            transition: all 0.2s ease;
+            position: relative;
         }
 
         .btn:active {
-            background-color: #ffa502;
-            color: white;
+            border-color: var(--primary-color);
+            background: #fff5f5;
         }
 
+        /* زر السفر المطوّر وحركته السلسة */
         #safariBtn {
-            position: relative;
-            z-index: 20;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 50;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .result {
+        .result-screen {
             display: none;
-            font-size: 1.5rem;
-            color: #ff4757;
-            font-weight: bold;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease-in;
-            line-height: 1.6;
+            animation: fadeIn 0.5s forwards;
         }
 
-        /* تأثير الخرفان الطائرة السحري */
-        .sheep {
+        .result-text {
+            font-size: 1.35rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* الخرفان الطائرة المضمونة */
+        .floating-emoji {
             position: absolute;
-            font-size: 2.5rem; /* حجم الخروف */
+            font-size: 28px;
             pointer-events: none;
-            z-index: 1;
-            animation: fly linear infinite;
-            bottom: -80px;
-            user-select: none;
+            z-index: 5;
+            animation: fly 5s linear infinite;
         }
 
-        @keyframes fly {
-            0% {
-                transform: translateY(0) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-            10% { opacity: 0.9; }
-            90% { opacity: 0.9; }
-            100% {
-                transform: translateY(-115vh) rotate(360deg) scale(1.1);
-                opacity: 0;
-            }
-        }
-
-        @keyframes popIn {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
         }
+
+        @keyframes fly {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <div style="font-size: 2.5rem; margin-bottom: 15px;">🎈❤️✨</div>
-        <h1>كل سنة وأنتِ طيبة يا نونو بمناسبة عيد الأضحى! 🎉</h1>
-        <p class="question">تحبي نعمل ايه في العيد ده يا نونو؟</p>
-        
-        <div class="options-container" id="options">
-            <button class="btn" onclick="showResult(1)">1- نخرج خروجة 🚗✨</button>
-            <button class="btn" id="safariBtn" onmouseover="handleSafariAction()" ontouchstart="handleSafariAction(); event.preventDefault();" onclick="handleSafariAction()">2- نسافر سفرية جامدة ✈️🌊</button>
-            <button class="btn" onclick="showResult(3)">3- نقعد في البيت ونتفرج علي افلام ونانتخ 🍿🎬</button>
+    <div class="home-btn" onclick="location.reload()">🏠</div>
+
+    <div class="container" id="mainCard">
+        <div id="quiz">
+            <h1>عيد سعيد يا نونو ❤️</h1>
+            <p class="question">تحبي نعمل ايه في العيد ده يا روحي؟</p>
+            
+            <div class="btn-group">
+                <button class="btn" onclick="showFinal(1)">1- نخرج خروجة 🚗✨</button>
+                <button class="btn" id="safariBtn" onclick="handleFlee()">2- نسافر سفرية جامدة ✈️🌊</button>
+                <button class="btn" onclick="showFinal(3)">3- نقعد في البيت ونانتخ 🍿🎬</button>
+            </div>
         </div>
 
-        <div class="result" id="resultBox"></div>
+        <div class="result-screen" id="resultArea">
+            <div class="result-text" id="resMsg"></div>
+            <p style="color: #666; font-weight: 600;">🐑 كل سنة وأنتِ منورة حياتي يا حبيبتي 🐑</p>
+        </div>
     </div>
 
     <script>
-        // دالة توليد الخرفان الطائرة المضمونة
-        function createSheep() {
-            const sheep = document.createElement('div');
-            sheep.innerHTML = "🐑"; // استخدام ايموجي الخروف كعنصر طائر مضمون الظهور
-            sheep.classList.add('sheep');
-            sheep.style.left = Math.random() * 85 + "vw";
-            
-            // سرعات عشوائية
-            const duration = Math.random() * 3 + 4; 
-            sheep.style.animationDuration = duration + "s";
-            
-            document.body.appendChild(sheep);
-            
-            setTimeout(() => {
-                sheep.remove();
-            }, duration * 1000);
-        }
-
-        // إطلاق خروف كل 600 مللي ثانية
-        setInterval(createSheep, 600);
-
-        let clickCount = 0;
+        let counter = 0;
         const safariBtn = document.getElementById('safariBtn');
 
-        // دالة موحدة للتعامل مع الهروب وتغيير النص معاً في نفس الوقت بدون أخطاء
-        function handleSafariAction() {
-            if (clickCount < 3) {
-                clickCount++;
+        // حركة الهروب للزر
+        function handleFlee() {
+            counter++;
+            
+            if (counter <= 3) {
+                // تغيير النص تصاعدياً حسب رغبتك
+                const messages = [
+                    "متأكدة من الاختيار ده؟ 🤔",
+                    "مفيش فايدة برضه؟ 😤",
+                    "متأكدة آخر قرار؟ 🧐"
+                ];
+                safariBtn.innerText = messages[counter-1];
 
-                // 1. تغيير النص أولاً بناءً على عدد الضغطات/اللمسات
-                if (clickCount === 1) {
-                    safariBtn.innerText = "متأكدة من الاختيار ده؟ 🤔";
-                } else if (clickCount === 2) {
-                    safariBtn.innerText = "مفيش فايدة برضه؟ 😤";
-                } else if (clickCount === 3) {
-                    safariBtn.innerText = "متأكدة آخر قرار؟ 🧐";
-                }
-
-                // 2. تفعيل الهروب الفوري للزر
-                const padding = 50;
+                // حسابات الهروب الذكي لتظل داخل أبعاد شاشة الموبايل والكمبيوتر
+                const padding = 60;
                 const maxX = window.innerWidth - safariBtn.offsetWidth - padding;
                 const maxY = window.innerHeight - safariBtn.offsetHeight - padding;
 
                 const randomX = Math.floor(Math.random() * (maxX - padding + 1)) + padding;
                 const randomY = Math.floor(Math.random() * (maxY - padding + 1)) + padding;
-                
+
                 safariBtn.style.position = 'fixed';
-                safariBtn.style.left = Math.max(10, randomX) + 'px';
-                safariBtn.style.top = Math.max(10, randomY) + 'px';
-
-                // إذا كانت هذه هي اللمسة الثالثة، نعيد الزر لمكانه الطبيعي فوراً بعد الهروب لكي تضغطه في الرابعة
-                if (clickCount === 3) {
-                    setTimeout(() => {
-                        safariBtn.style.position = 'relative';
-                        safariBtn.style.left = '0';
-                        safariBtn.style.top = '0';
-                    }, 500); // يعود لمكانه بعد نصف ثانية ليصبح جاهزاً للصدمة
-                }
-            } else if (clickCount === 3) {
-                // الضغطة الرابعة والأخيرة تظهر النتيجة
-                showResult(2);
+                safariBtn.style.left = Math.max(15, randomX) + 'px';
+                safariBtn.style.top = Math.max(15, randomY) + 'px';
+                safariBtn.style.width = '220px';
+            } else {
+                // الضغطة الرابعة تظهر الصدمة
+                showFinal(2);
             }
         }
 
-        function showResult(choice) {
-            const options = document.getElementById('options');
-            const resultBox = document.getElementById('resultBox');
+        function showFinal(id) {
+            document.getElementById('quiz').style.display = 'none';
+            const area = document.getElementById('resultArea');
+            const msg = document.getElementById('resMsg');
             
-            options.style.display = 'none';
-            
-            let message = "";
-            if(choice === 1) {
-                message = "ماشي هنصرف 💸❤️";
-                resultBox.style.color = "#2ed573";
-            } else if(choice === 2) {
-                message = "فوقي يا موهومة! 🤫😂";
-                resultBox.style.color = "#ff4757";
-            } else if(choice === 3) {
-                message = "جدعة هيا دي نونو اللي أعرفها 🍿🛋️❤️";
-                resultBox.style.color = "#1e90ff";
+            safariBtn.style.display = 'none';
+
+            // الأجوبة والردود المطلوبة بالظبط بالأرقام
+            if(id === 1) {
+                msg.innerText = "ماشي هنصرف 💸❤️";
+                msg.style.color = "#a31d1d";
+            } else if(id === 2) {
+                msg.innerText = "فوقي يا موهومة! 🤫😂";
+                msg.style.color = "#a31d1d";
+            } else {
+                msg.innerText = "جدعة هيا دي نونو اللي أعرفها 🍿🛋️❤️";
+                msg.style.color = "#28a745";
             }
             
-            resultBox.innerHTML = message + "<br><br>🐑 كل سنة وأنتِ منورة حياتي يا روحي 🐑";
-            resultBox.style.display = 'block';
+            area.style.display = 'block';
         }
+
+        // توليد تأثير خرفان طائرة مبهج وتلقائي
+        setInterval(() => {
+            const e = document.createElement('div');
+            e.className = 'floating-emoji';
+            e.innerText = '🐑';
+            e.style.left = Math.random() * 90 + 'vw';
+            e.style.bottom = '-50px';
+            e.style.animationDuration = (Math.random() * 2 + 4) + 's';
+            document.body.appendChild(e);
+            setTimeout(() => e.remove(), 6000);
+        }, 900);
     </script>
 </body>
 </html>
