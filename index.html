@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مفاجأة العيد لنونو ❤️</title>
     <style>
-        /* إعدادات الخلفية لتناسب الموبايل */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 100%);
@@ -16,10 +15,9 @@
             margin: 0;
             overflow: hidden;
             position: relative;
-            touch-action: manipulation; /* تحسين اللمس للموبايل */
+            touch-action: manipulation;
         }
 
-        /* كرت متجاوب مع شاشات الموبايل */
         .card {
             background: white;
             padding: 25px 20px;
@@ -65,7 +63,7 @@
             border-radius: 12px;
             cursor: pointer;
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            -webkit-tap-highlight-color: transparent; /* إزالة الوميض الأزرق في الموبايل */
+            -webkit-tap-highlight-color: transparent;
             transition: background-color 0.3s, color 0.3s;
         }
 
@@ -74,7 +72,6 @@
             color: white;
         }
 
-        /* تعديل حركة الزر الهارب ليعمل بسلاسة على الموبايل */
         #safariBtn {
             position: relative;
             z-index: 20;
@@ -91,26 +88,26 @@
             line-height: 1.6;
         }
 
-        /* أنميشن الخرفان المتطايرة حجم مناسب للموبايل */
+        /* تأثير الخرفان الطائرة السحري */
         .sheep {
             position: absolute;
-            width: 45px;
-            height: auto;
+            font-size: 2.5rem; /* حجم الخروف */
             pointer-events: none;
             z-index: 1;
             animation: fly linear infinite;
             bottom: -80px;
+            user-select: none;
         }
 
         @keyframes fly {
             0% {
-                transform: translateY(0) rotate(0deg);
+                transform: translateY(0) rotate(0deg) scale(0.8);
                 opacity: 0;
             }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
+            10% { opacity: 0.9; }
+            90% { opacity: 0.9; }
             100% {
-                transform: translateY(-115vh) rotate(360deg);
+                transform: translateY(-115vh) rotate(360deg) scale(1.1);
                 opacity: 0;
             }
         }
@@ -135,7 +132,7 @@
         
         <div class="options-container" id="options">
             <button class="btn" onclick="showResult(1)">1- نخرج خروجة 🚗✨</button>
-            <button class="btn" id="safariBtn" onmouseover="fleeButton()" ontouchstart="fleeButton(); event.preventDefault();" onclick="handleSafariClick(event)">2- نسافر سفرية جامدة ✈️🌊</button>
+            <button class="btn" id="safariBtn" onmouseover="handleSafariAction()" ontouchstart="handleSafariAction(); event.preventDefault();" onclick="handleSafariAction()">2- نسافر سفرية جامدة ✈️🌊</button>
             <button class="btn" onclick="showResult(3)">3- نقعد في البيت ونتفرج علي افلام ونانتخ 🍿🎬</button>
         </div>
 
@@ -143,17 +140,14 @@
     </div>
 
     <script>
-        const sheepImage = "https://img.icons8.com/color/96/cartoon-sheep.png";
-
+        // دالة توليد الخرفان الطائرة المضمونة
         function createSheep() {
-            const sheep = document.createElement('img');
-            sheep.src = sheepImage;
+            const sheep = document.createElement('div');
+            sheep.innerHTML = "🐑"; // استخدام ايموجي الخروف كعنصر طائر مضمون الظهور
             sheep.classList.add('sheep');
-            sheep.style.left = Math.random() * 90 + "vw"; // تحديد العرض ليناسب الموبايل ولا يخرج عن الشاشة
+            sheep.style.left = Math.random() * 85 + "vw";
             
-            const size = Math.random() * 20 + 35; // حجم أصغر قليلاً ومناسب لشاشة الهاتف
-            sheep.style.width = size + "px";
-            
+            // سرعات عشوائية
             const duration = Math.random() * 3 + 4; 
             sheep.style.animationDuration = duration + "s";
             
@@ -164,47 +158,48 @@
             }, duration * 1000);
         }
 
-        // إطلاق الخرفان
+        // إطلاق خروف كل 600 مللي ثانية
         setInterval(createSheep, 600);
 
         let clickCount = 0;
         const safariBtn = document.getElementById('safariBtn');
 
-        function fleeButton() {
+        // دالة موحدة للتعامل مع الهروب وتغيير النص معاً في نفس الوقت بدون أخطاء
+        function handleSafariAction() {
             if (clickCount < 3) {
-                // حسابات دقيقة لأبعاد شاشة الموبايل والكمبيوتر حتى لا يختفي الزر خارج الشاشة
-                const padding = 40;
-                const minX = padding;
+                clickCount++;
+
+                // 1. تغيير النص أولاً بناءً على عدد الضغطات/اللمسات
+                if (clickCount === 1) {
+                    safariBtn.innerText = "متأكدة من الاختيار ده؟ 🤔";
+                } else if (clickCount === 2) {
+                    safariBtn.innerText = "مفيش فايدة برضه؟ 😤";
+                } else if (clickCount === 3) {
+                    safariBtn.innerText = "متأكدة آخر قرار؟ 🧐";
+                }
+
+                // 2. تفعيل الهروب الفوري للزر
+                const padding = 50;
                 const maxX = window.innerWidth - safariBtn.offsetWidth - padding;
-                const minY = padding;
                 const maxY = window.innerHeight - safariBtn.offsetHeight - padding;
 
-                const randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
-                const randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+                const randomX = Math.floor(Math.random() * (maxX - padding + 1)) + padding;
+                const randomY = Math.floor(Math.random() * (maxY - padding + 1)) + padding;
                 
                 safariBtn.style.position = 'fixed';
-                safariBtn.style.left = randomX + 'px';
-                safariBtn.style.top = randomY + 'px';
-            }
-        }
+                safariBtn.style.left = Math.max(10, randomX) + 'px';
+                safariBtn.style.top = Math.max(10, randomY) + 'px';
 
-        function handleSafariClick(event) {
-            event.preventDefault();
-            clickCount++;
-
-            if (clickCount === 1) {
-                safariBtn.innerText = "متأكدة من الاختيار ده؟ 🤔";
-                fleeButton();
-            } else if (clickCount === 2) {
-                safariBtn.innerText = "مفيش فايدة برضه؟ 😤";
-                fleeButton();
+                // إذا كانت هذه هي اللمسة الثالثة، نعيد الزر لمكانه الطبيعي فوراً بعد الهروب لكي تضغطه في الرابعة
+                if (clickCount === 3) {
+                    setTimeout(() => {
+                        safariBtn.style.position = 'relative';
+                        safariBtn.style.left = '0';
+                        safariBtn.style.top = '0';
+                    }, 500); // يعود لمكانه بعد نصف ثانية ليصبح جاهزاً للصدمة
+                }
             } else if (clickCount === 3) {
-                safariBtn.innerText = "متأكدة آخر قرار؟ 🧐";
-                // يثبت الزر تماماً لتتمكن من ضغطه في المرة الرابعة
-                safariBtn.style.position = 'relative';
-                safariBtn.style.left = '0';
-                safariBtn.style.top = '0';
-            } else if (clickCount === 4) {
+                // الضغطة الرابعة والأخيرة تظهر النتيجة
                 showResult(2);
             }
         }
