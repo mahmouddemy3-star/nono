@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #a31d1d; /* اللون الأحمر العيد */
+            --primary-color: #a31d1d; 
             --glass-bg: rgba(255, 255, 255, 0.88);
         }
 
@@ -20,8 +20,8 @@
             margin: 0;
             padding: 0;
             font-family: 'Cairo', sans-serif;
-            /* تم وضع رابط صورتك هنا مباشرة */
-            background: url('https://i.ibb.co/4nw53S85/image.jpg') no-repeat center center fixed;
+            /* تم وضع رابط صورتك الجديدة عالية الجودة هنا */
+            background: url('https://i.ibb.co/yB6cf1W3/image.jpg') no-repeat center center fixed;
             background-size: cover;
             height: 100vh;
             display: flex;
@@ -30,16 +30,15 @@
             overflow: hidden;
         }
 
-        /* طبقة حماية خفيفة لراحة العين وضمان وضوح النصوص */
         body::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(24df, 240, 225, 0.15); /* تلميحة بيج خفيفة تناسب التصميم */
+            background: rgba(245, 240, 225, 0.15); 
             z-index: 1;
         }
 
-        /* زر الهوم الدائري العصري لإعادة التجربة */
+        /* زر الهوم الدائري لإعادة التجربة */
         .home-btn {
             position: fixed;
             top: 20px;
@@ -60,7 +59,7 @@
         }
         .home-btn:active { transform: scale(0.9); }
 
-        /* الكارت الشفاف العصري المتموضع بدقة فوق التصميم */
+        /* الكارت الشفاف العصري */
         .container {
             position: relative;
             z-index: 10;
@@ -75,7 +74,7 @@
             border: 1px solid rgba(255,255,255,0.4);
             box-shadow: 0 15px 35px rgba(163, 29, 29, 0.15);
             animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
-            margin-bottom: 80px; /* ترحيل الكارت للأعلى قليلاً ليتناسق مع الخروف في الخلفية */
+            margin-bottom: 80px; 
         }
 
         h1 {
@@ -100,7 +99,7 @@
 
         .btn {
             background: white;
-            border: 1.5px solid #e2d2be; /* لون بيج هادئ مريح للعين مستوحى من الخلفية */
+            border: 1.5px solid #e2d2be; 
             padding: 14px;
             border-radius: 15px;
             font-size: 0.98rem;
@@ -116,7 +115,6 @@
             background: #fff5f5;
         }
 
-        /* زر السفر المطوّر وحركته السلسة */
         #safariBtn {
             z-index: 50;
             transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -134,7 +132,6 @@
             line-height: 1.5;
         }
 
-        /* الخرفان الطائرة المضمونة */
         .floating-emoji {
             position: absolute;
             font-size: 28px;
@@ -168,11 +165,11 @@
     <div class="container" id="mainCard">
         <div id="quiz">
             <h1>عيد سعيد يا نونو ❤️</h1>
-            <p class="question">تحبي نعمل ايه في العيد ده يا روحي؟</p>
+            <p class="question">تحبي نعمل ايه في العيد ده يا روحي?</p>
             
             <div class="btn-group">
                 <button class="btn" onclick="showFinal(1)">1- نخرج خروجة 🚗✨</button>
-                <button class="btn" id="safariBtn" onclick="handleFlee()">2- نسافر سفرية جامدة ✈️🌊</button>
+                <button class="btn" id="safariBtn" onmouseover="handleSafariAction()" ontouchstart="handleSafariAction(); event.preventDefault();" onclick="handleSafariAction()">2- نسافر سفرية جامدة ✈️🌊</button>
                 <button class="btn" onclick="showFinal(3)">3- نقعد في البيت ونانتخ 🍿🎬</button>
             </div>
         </div>
@@ -187,12 +184,10 @@
         let counter = 0;
         const safariBtn = document.getElementById('safariBtn');
 
-        // حركة الهروب للزر
-        function handleFlee() {
-            counter++;
-            
-            if (counter <= 3) {
-                // تغيير النص تصاعدياً حسب رغبتك
+        function handleSafariAction() {
+            if (counter < 3) {
+                counter++;
+                
                 const messages = [
                     "متأكدة من الاختيار ده؟ 🤔",
                     "مفيش فايدة برضه؟ 😤",
@@ -200,7 +195,6 @@
                 ];
                 safariBtn.innerText = messages[counter-1];
 
-                // حسابات الهروب الذكي لتظل داخل أبعاد شاشة الموبايل والكمبيوتر
                 const padding = 60;
                 const maxX = window.innerWidth - safariBtn.offsetWidth - padding;
                 const maxY = window.innerHeight - safariBtn.offsetHeight - padding;
@@ -212,8 +206,15 @@
                 safariBtn.style.left = Math.max(15, randomX) + 'px';
                 safariBtn.style.top = Math.max(15, randomY) + 'px';
                 safariBtn.style.width = '220px';
-            } else {
-                // الضغطة الرابعة تظهر الصدمة
+
+                if (counter === 3) {
+                    setTimeout(() => {
+                        safariBtn.style.position = 'relative';
+                        safariBtn.style.left = '0';
+                        safariBtn.style.top = '0';
+                    }, 500);
+                }
+            } else if (counter === 3) {
                 showFinal(2);
             }
         }
@@ -225,7 +226,6 @@
             
             safariBtn.style.display = 'none';
 
-            // الأجوبة والردود المطلوبة بالظبط بالأرقام
             if(id === 1) {
                 msg.innerText = "ماشي هنصرف 💸❤️";
                 msg.style.color = "#a31d1d";
@@ -240,7 +240,6 @@
             area.style.display = 'block';
         }
 
-        // توليد تأثير خرفان طائرة مبهج وتلقائي
         setInterval(() => {
             const e = document.createElement('div');
             e.className = 'floating-emoji';
