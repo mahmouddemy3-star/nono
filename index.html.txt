@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مفاجأة العيد لنونو ❤️</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #e8f5e9 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid #ff6b81;
+            position: relative;
+            z-index: 10;
+            animation: popIn 0.8s ease-out;
+        }
+
+        h1 {
+            color: #ff4757;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            color: #2ed573;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            position: relative;
+        }
+
+        .btn {
+            background-color: #ffffff;
+            border: 2px solid #ffa502;
+            color: #333;
+            padding: 15px 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s, transform 0.1s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .btn:hover {
+            background-color: #ffa502;
+            color: white;
+        }
+
+        /* تنسيق خاص بالزر الهارب */
+        #safariBtn {
+            position: relative;
+            z-index: 20;
+            transition: all 0.2s ease;
+        }
+
+        .result {
+            display: none;
+            font-size: 1.6rem;
+            color: #ff4757;
+            font-weight: bold;
+            margin-top: 20px;
+            animation: fadeIn 0.5s ease-in;
+            line-height: 1.6;
+        }
+
+        /* أنميشن الخرفان المتطايرة */
+        .sheep {
+            position: absolute;
+            width: 60px;
+            height: auto;
+            pointer-events: none;
+            z-index: 1;
+            animation: fly linear infinite;
+            bottom: -80px;
+        }
+
+        @keyframes fly {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-110vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 15px;">🎈❤️✨</div>
+        <h1>كل سنة وأنتِ طيبة يا نونو بمناسبة عيد الأضحى! 🎉</h1>
+        <p class="question">تحبي نعمل ايه في العيد ده يا نونو؟</p>
+        
+        <div class="options-container" id="options">
+            <button class="btn" onclick="showResult(1)">1- نخرج خروجة 🚗✨</button>
+            <button class="btn" id="safariBtn" onmouseover="fleeButton()" onclick="handleSafariClick(event)">2- نسافر سفرية جامدة ✈️🌊</button>
+            <button class="btn" onclick="showResult(3)">3- نقعد في البيت ونتفرج علي افلام ونانتخ 🍿🎬</button>
+        </div>
+
+        <div class="result" id="resultBox"></div>
+    </div>
+
+    <script>
+        // مصفوفة روابط لصور خرفان لطيفة ومبهجة
+        const sheepImage = "https://img.icons8.com/color/96/cartoon-sheep.png";
+
+        // توليد الخرفان الطائرة تلقائياً
+        function createSheep() {
+            const sheep = document.createElement('img');
+            sheep.src = sheepImage;
+            sheep.classList.add('sheep');
+            
+            // توزيع عشوائي للخرفان على الشاشة
+            sheep.style.left = Math.random() * 100 + "vw";
+            
+            // أحجام وسرعات عشوائية لتأثير أجمل
+            const size = Math.random() * 30 + 40; // بين 40px و 70px
+            sheep.style.width = size + "px";
+            
+            const duration = Math.random() * 4 + 4; // بين 4 و 8 ثواني
+            sheep.style.animationDuration = duration + "s";
+            
+            document.body.appendChild(sheep);
+            
+            // حذف الخروف بعد انتهاء حركته لتوفير الأداء
+            setTimeout(() => {
+                sheep.remove();
+            }, duration * 1000);
+        }
+
+        // إطلاق خروف جديد كل نصف ثانية
+        setInterval(createSheep, 500);
+
+        let clickCount = 0;
+        const safariBtn = document.getElementById('safariBtn');
+
+        // وظيفة تجعل الزر يهرب عند اقتراب الماوس أو اللمس
+        function fleeButton() {
+            // الزر سيهرب فقط أول 3 مرات، في الرابعة سيثبت ليتم الضغط عليه وإظهار الصدمة
+            if (clickCount < 3) {
+                const x = Math.random() * (window.innerWidth - safariBtn.offsetWidth - 40) - (window.innerWidth / 2 - safariBtn.offsetWidth);
+                const y = Math.random() * (window.innerHeight - safariBtn.offsetHeight - 40) - (window.innerHeight / 2 - safariBtn.offsetHeight);
+                
+                safariBtn.style.position = 'fixed';
+                safariBtn.style.left = Math.min(Math.max(20, Math.random() * (window.innerWidth - 150)), window.innerWidth - 150) + 'px';
+                safariBtn.style.top = Math.min(Math.max(20, Math.random() * (window.innerHeight - 80)), window.innerHeight - 80) + 'px';
+            }
+        }
+
+        // معالجة الضغطات على زر السفرية
+        function handleSafariClick(event) {
+            event.preventDefault();
+            clickCount++;
+
+            if (clickCount === 1) {
+                safariBtn.innerText = "متأكدة من الاختيار ده؟ 🤔";
+                fleeButton();
+            } else if (clickCount === 2) {
+                safariBtn.innerText = "مفيش فايدة برضه؟ 😤";
+                fleeButton();
+            } else if (clickCount === 3) {
+                safariBtn.innerText = "متأكدة آخر قرار؟ 🧐";
+                // نلغي الهروب الآن لكي تستطيع ضغطه للمرة الرابعة والأخيرة
+                safariBtn.style.position = 'relative';
+                safariBtn.style.left = '0';
+                safariBtn.style.top = '0';
+            } else if (clickCount === 4) {
+                showResult(2);
+            }
+        }
+
+        // إظهار النتائج النهائية حسب الأرقام المطلوبة
+        function showResult(choice) {
+            const options = document.getElementById('options');
+            const resultBox = document.getElementById('resultBox');
+            
+            options.style.display = 'none';
+            
+            let message = "";
+            if(choice === 1) {
+                message = "ماشي هنصرف 💸❤️";
+                resultBox.style.color = "#2ed573";
+            } else if(choice === 2) {
+                message = "فوقي يا موهومة! 🤫😂";
+                resultBox.style.color = "#ff4757";
+            } else if(choice === 3) {
+                message = "جدعة هيا دي نونو اللي أعرفها 🍿🛋️❤️";
+                resultBox.style.color = "#1e90ff";
+            }
+            
+            resultBox.innerHTML = message + "<br><br>🐑 كل سنة وأنتِ منورة حياتي يا روحي 🐑";
+            resultBox.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
